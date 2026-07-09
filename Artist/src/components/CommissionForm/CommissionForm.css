@@ -1,0 +1,207 @@
+/* =============================================
+   COMMISSION FORM
+   ============================================= */
+.commission {
+  padding: var(--spacing-2xl) 0;
+  background-color: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+
+.commission__inner {
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.commission__header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.commission__title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 0.8rem;
+  line-height: 1.2;
+}
+
+.commission__subtitle {
+  font-size: 0.85rem;
+  color: var(--color-text-light);
+  line-height: 1.85;
+  font-weight: 300;
+}
+
+/* Form */
+.commission__form {
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 2.5rem 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.4rem;
+}
+
+.commission__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+
+.commission__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.commission__label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.commission__input,
+.commission__textarea {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--color-input-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  color: var(--color-text);
+  outline: none;
+  transition: border-color var(--transition), box-shadow var(--transition);
+  resize: none;
+}
+
+.commission__input::placeholder,
+.commission__textarea::placeholder {
+  color: var(--color-text-muted);
+  font-weight: 300;
+}
+
+.commission__input:focus,
+.commission__textarea:focus {
+  border-color: var(--color-text);
+  box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.06);
+}
+
+/* Footer */
+.commission__footer {
+  display: flex;
+  justify-content: center;
+  padding-top: 0.5rem;
+}
+
+.commission__submit {
+  background: var(--color-btn-dark);
+  color: var(--color-btn-text);
+  border: none;
+  padding: 0.9rem 2.8rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+  position: relative;
+  overflow: hidden;
+}
+
+.commission__submit::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(255,255,255,0.1);
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.commission__submit:hover {
+  background: #2a2a2a;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+}
+
+.commission__submit:hover::after {
+  opacity: 1;
+}
+
+.commission__submit:active {
+  transform: translateY(0);
+}
+
+/* Success */
+.commission__success {
+  text-align: center;
+  padding: 3rem 2rem;
+  background: var(--color-white);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.commission__success-icon {
+  width: 52px;
+  height: 52px;
+  background: #1a1a1a;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  margin: 0 auto 1.2rem;
+}
+
+.commission__success h3 {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--color-text);
+}
+
+.commission__success p {
+  font-size: 0.88rem;
+  color: var(--color-text-light);
+  margin-bottom: 1.5rem;
+}
+
+.commission__reset-btn {
+  background: none;
+  border: 1px solid var(--color-border);
+  padding: 0.6rem 1.5rem;
+  font-size: 0.78rem;
+  color: var(--color-text-light);
+  border-radius: var(--radius-sm);
+  transition: border-color var(--transition), color var(--transition);
+}
+
+.commission__reset-btn:hover {
+  border-color: var(--color-text);
+  color: var(--color-text);
+}
+
+@media (max-width: 640px) {
+  .commission__row {
+    grid-template-columns: 1fr;
+  }
+
+  .commission__form {
+    padding: 1.8rem 1.5rem;
+  }
+
+  .commission__subtitle br {
+    display: none;
+  }
+}

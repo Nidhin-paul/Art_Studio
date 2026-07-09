@@ -1,0 +1,142 @@
+/* =============================================
+   ARTIST BIO
+   ============================================= */
+.artist {
+  padding: var(--spacing-2xl) 0;
+  background-color: var(--color-bg-dark);
+  border-top: 1px solid var(--color-border);
+}
+
+.artist__layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  align-items: start;
+}
+
+/* LEFT */
+.artist__left {
+  position: relative;
+}
+
+.artist__photo-wrap {
+  overflow: hidden;
+  border-radius: var(--radius-sm);
+}
+
+.artist__photo {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s ease;
+}
+
+.artist__photo-wrap:hover .artist__photo {
+  transform: scale(1.03);
+}
+
+/* Quote Card — positioned on top of the photo */
+.artist__quote-card {
+  position: absolute;
+  bottom: -2.5rem;
+  left: 2rem;
+  width: 220px;
+  background-color: var(--color-quote-bg);
+  padding: 1.5rem 1.6rem;
+  border-radius: var(--radius-sm);
+  z-index: 2;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  animation: quoteFloat 4s ease-in-out infinite;
+}
+
+@keyframes quoteFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.artist__quote-location {
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(26, 26, 26, 0.55);
+  margin-bottom: 0.6rem;
+}
+
+.artist__quote-text {
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-style: italic;
+  font-weight: 400;
+  color: var(--color-text);
+  line-height: 1.55;
+  quotes: none;
+}
+
+/* RIGHT */
+.artist__right {
+  padding-top: 1rem;
+}
+
+.artist__name {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 1.5rem;
+  line-height: 1.1;
+}
+
+.artist__bio {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.artist__bio p {
+  font-size: 0.88rem;
+  color: var(--color-text-light);
+  line-height: 1.9;
+  font-weight: 300;
+}
+
+.artist__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--color-text);
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--color-text);
+  padding-bottom: 0.15rem;
+  transition: gap var(--transition), opacity var(--transition);
+}
+
+.artist__cta:hover {
+  gap: 0.9rem;
+  opacity: 0.65;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .artist__layout {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+
+  .artist__quote-card {
+    position: relative;
+    bottom: auto;
+    left: auto;
+    margin-top: 1.5rem;
+    width: auto;
+    max-width: 280px;
+  }
+
+  .artist {
+    padding: var(--spacing-xl) 0;
+  }
+}

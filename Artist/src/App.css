@@ -1,0 +1,4 @@
+/* App.css — minimal shell overrides */
+#root {
+  min-height: 100vh;
+}

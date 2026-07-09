@@ -1,0 +1,388 @@
+
+/* =============================================
+   COLLECTION
+   ============================================= */
+.collection {
+  padding: var(--spacing-2xl) 0;
+  background-color: var(--color-bg);
+  border-top: 1px solid var(--color-border);
+}
+
+/* Header */
+.collection__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 3.5rem;
+}
+
+.collection__header-left {
+  flex-shrink: 0;
+}
+
+.collection__title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-weight: 500;
+  color: var(--color-text);
+  line-height: 1.2;
+  margin-top: 0.2rem;
+}
+
+.collection__description {
+  font-size: 0.82rem;
+  color: var(--color-text-light);
+  line-height: 1.85;
+  text-align: left;
+  max-width: 320px;
+}
+
+/* Grid */
+.collection__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem 1.8rem;
+}
+
+/* Art Card */
+.art-card {
+  cursor: pointer;
+}
+
+.art-card--featured {
+  grid-column: span 4;
+}
+
+.art-card__image-wrap {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-bg-dark);
+  aspect-ratio: 4 / 5;
+  border-radius: 8px;
+}
+
+.art-card__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.art-card:hover .art-card__image {
+  transform: scale(1.04);
+}
+
+.art-card__badge {
+  position: absolute;
+  top: 0.8rem;
+  left: 0.8rem;
+  background: var(--color-btn-dark);
+  color: var(--color-white);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  padding: 0.25rem 0.5rem;
+  border-radius: var(--radius-sm);
+  z-index: 2;
+}
+
+.art-card__plus-btn {
+  position: absolute;
+  top: 0.8rem;
+  right: 0.8rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: rgba(150, 150, 150, 0.7);
+  color: white;
+  border: none;
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  padding-bottom: 2px; /* slight vertical centering tweak */
+}
+
+.art-card__plus-btn:hover {
+  background: rgba(120, 120, 120, 0.9);
+  transform: scale(1.05);
+}
+
+.art-card__overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(26, 26, 26, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.art-card:hover .art-card__overlay {
+  opacity: 1;
+}
+
+.art-card__view-btn {
+  color: var(--color-white);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  padding: 0.6rem 1.4rem;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), border-color var(--transition);
+}
+
+.art-card:hover .art-card__view-btn {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--color-white);
+}
+
+/* Info Row (kept for admin, hidden in public grid) */
+.art-card__info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem 0 0;
+  border-top: 1px solid var(--color-border);
+  margin-top: 0;
+}
+
+/* Inner overlay title (public gallery) */
+.art-card__inner-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 2.5rem 1.1rem 1rem;
+  background: linear-gradient(to top, rgba(10,10,10,0.82) 0%, rgba(10,10,10,0.3) 60%, transparent 100%);
+  z-index: 5;
+  transition: opacity 0.3s ease;
+}
+
+.art-card__inner-title {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #fff;
+  margin-bottom: 0.2rem;
+  line-height: 1.3;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.6);
+}
+
+.art-card__inner-meta {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.8);
+  font-weight: 300;
+  letter-spacing: 0.03em;
+}
+
+/* Admin cards — suppress the public title overlay */
+.art-card--admin .art-card__inner-info {
+  display: none;
+}
+
+
+.art-card__title {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--color-text);
+  margin-bottom: 0.15rem;
+}
+
+.art-card__meta {
+  font-size: 0.72rem;
+  color: var(--color-text-muted);
+  font-weight: 300;
+}
+
+.art-card__arrow {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  transition: transform var(--transition), color var(--transition);
+  flex-shrink: 0;
+}
+
+.art-card:hover .art-card__arrow {
+  transform: translateX(4px);
+  color: var(--color-text);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .collection__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .collection__header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .collection__description {
+    text-align: left;
+  }
+}
+
+@media (max-width: 540px) {
+  .collection__grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+  .collection {
+    padding: var(--spacing-xl) 0;
+  }
+}
+
+/* =============================================
+   MODAL
+   ============================================= */
+.collection-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  backdrop-filter: blur(5px);
+  animation: modalFadeIn 0.3s ease;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; backdrop-filter: blur(0px); }
+  to { opacity: 1; backdrop-filter: blur(5px); }
+}
+
+.collection-modal__content {
+  background: var(--color-bg);
+  width: 100%;
+  max-width: 1000px;
+  max-height: 90vh;
+  border-radius: var(--radius-md);
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  animation: modalSlideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes modalSlideUp {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.collection-modal__close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.9);
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text);
+  transition: background var(--transition), transform var(--transition);
+}
+
+.collection-modal__close:hover {
+  background: var(--color-white);
+  transform: scale(1.05);
+}
+
+.collection-modal__image-wrap {
+  flex: 1.5;
+  background: var(--color-bg-dark);
+  position: relative;
+}
+
+.collection-modal__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.collection-modal__details {
+  flex: 1;
+  padding: 3.5rem 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  background: var(--color-white);
+}
+
+.collection-modal__title {
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+  line-height: 1.2;
+}
+
+.collection-modal__meta {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  margin-bottom: 2rem;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.collection-modal__desc {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--color-text-light);
+  margin-bottom: 3rem;
+}
+
+.collection-modal__inquiry-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-btn-dark);
+  color: var(--color-white);
+  padding: 1.1rem 2rem;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  transition: background var(--transition), transform var(--transition);
+  text-align: center;
+}
+
+.collection-modal__inquiry-btn:hover {
+  background: var(--color-text);
+  transform: translateY(-2px);
+  color: var(--color-white);
+}
+
+@media (max-width: 900px) {
+  .collection-modal__content {
+    flex-direction: column;
+    max-height: 95vh;
+    overflow-y: auto;
+  }
+  
+  .collection-modal__image-wrap {
+    min-height: 400px;
+    flex: none;
+  }
+  
+  .collection-modal__details {
+    padding: 2.5rem 2rem;
+    flex: none;
+  }
+}
