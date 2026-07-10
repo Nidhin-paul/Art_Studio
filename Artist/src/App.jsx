@@ -6,6 +6,7 @@ import HomePage from './pages/HomePage'
 import AboutPage from './pages/AboutPage'
 import ContactPage from './pages/ContactPage'
 import AdminPage from './pages/AdminPage'
+import ArtworkPage from './pages/ArtworkPage'
 
 function App() {
   const [currentPath, setCurrentPath] = useState(window.location.hash || '#/')
@@ -23,6 +24,10 @@ function App() {
     if (currentPath === '#/about') return <AboutPage />
     if (currentPath === '#/contact') return <ContactPage />
     if (currentPath === '#/admin') return <AdminPage />
+    if (currentPath.startsWith('#/artwork/')) {
+      const id = currentPath.split('#/artwork/')[1]
+      return <ArtworkPage id={id} />
+    }
     return <HomePage />
   }
 

@@ -129,7 +129,6 @@ const artworks = [
 
 export default function Collection() {
   const [artworks, setArtworks] = useState(FALLBACK_ARTWORKS)
-  const [selectedWork, setSelectedWork] = useState(null)
 
   // Fetch artworks from API — use fallback if API is unavailable or empty
   useEffect(() => {
@@ -145,98 +144,62 @@ export default function Collection() {
       })
   }, [])
 
-  // Prevent scrolling when modal is open
-  useEffect(() => {
-    if (selectedWork) {
-      document.body.style.overflow = 'hidden'
-    } else {
-      document.body.style.overflow = 'unset'
-    }
-    return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [selectedWork])
-
-  const openModal = (work) => setSelectedWork(work)
-  const closeModal = () => setSelectedWork(null)
+  const openArtworkPage = (work) => {
+    window.location.hash = '#/artwork/' + (work._id || work.id);
+  }
 
   return (
-    <>
-      <section className="collection" id="collection">
-        <div className="collection__header-wrapper" style={{ padding: '0 2rem' }}>
-          {/* Header Row */}
-          <div className="collection__header">
-            <div className="collection__header-left">
-              <span className="section-label">Gallery</span>
-              <h2 className="collection__title" id="collection-title">The Collection</h2>
-            </div>
-            <p className="collection__description">
-              Each piece is a singular vision of light and proportion,<br />
-              crafted with intentionality and precision.
-            </p>
+    <section className="collection" id="collection">
+      <div className="collection__header-wrapper" style={{ padding: '0 2rem' }}>
+        {/* Header Row */}
+        <div className="collection__header">
+          <div className="collection__header-left">
+            <span className="section-label">Gallery</span>
+            <h2 className="collection__title" id="collection-title">The Collection</h2>
           </div>
+          <p className="collection__description">
+            Each piece is a singular vision of light and proportion,<br />
+            crafted with intentionality and precision.
+          </p>
         </div>
+      </div>
 
-        {/* Artwork Grid */}
-        <div className="collection__grid-wrapper" style={{ padding: '0 2rem' }}>
-          <div className="collection__grid" id="artwork-grid">
-            {artworks.map((art) => (
-              <article 
-                className="art-card" 
-                key={art._id || art.id} 
-                id={`art-card-${art._id || art.id}`}
-                onClick={() => openModal(art)}
-              >
-                <div className="art-card__image-wrap">
-                  <img
-                    src={art.img}
-                    alt={art.title}
-                    className="art-card__image"
-                    loading="lazy"
-                  />
-                  {art.has360 && (
-                    <span className="art-card__badge" aria-label="360 degree view available">360°</span>
-                  )}
-                  <button className="art-card__plus-btn" aria-label="View Details" onClick={(e) => { e.stopPropagation(); openModal(art); }}>
-                    +
-                  </button>
-                  <div className="art-card__overlay">
-                    <span className="art-card__view-btn">View Work →</span>
-                  </div>
-                  {/* Title inside the image card */}
-                  <div className="art-card__inner-info">
-                    <h3 className="art-card__inner-title">{art.title}</h3>
-                    <p className="art-card__inner-meta">{art.medium}, {art.year}</p>
-                  </div>
+      {/* Artwork Grid */}
+      <div className="collection__grid-wrapper" style={{ padding: '0 2rem' }}>
+        <div className="collection__grid" id="artwork-grid">
+          {artworks.map((art) => (
+            <article 
+              className="art-card" 
+              key={art._id || art.id} 
+              id={`art-card-${art._id || art.id}`}
+              onClick={() => openArtworkPage(art)}
+            >
+              <div className="art-card__image-wrap">
+                <img
+                  src={art.img}
+                  alt={art.title}
+                  className="art-card__image"
+                  loading="lazy"
+                />
+                {art.has360 && (
+                  <span className="art-card__badge" aria-label="360 degree view available">360°</span>
+                )}
+                <button className="art-card__plus-btn" aria-label="View Details" onClick={(e) => { e.stopPropagation(); openArtworkPage(art); }}>
+                  +
+                </button>
+                <div className="art-card__overlay">
+                  <span className="art-card__view-btn">View Work →</span>
                 </div>
-              </article>
-            ))}
-          </div>
+                {/* Title inside the image card */}
+                <div className="art-card__inner-info">
+                  <h3 className="art-card__inner-title">{art.title}</h3>
+                  <p className="art-card__inner-meta">{art.medium}, {art.year}</p>
+                </div>
+              </div>
+            </article>
+          ))}
         </div>
-      </section>
-
-      {/* Modal */}
-      {selectedWork && (
-        <div className="collection-modal" onClick={closeModal}>
-          <div className="collection-modal__content" onClick={(e) => e.stopPropagation()}>
-            <button className="collection-modal__close" onClick={closeModal} aria-label="Close modal">
-              ✕
-            </button>
-            <div className="collection-modal__image-wrap">
-              <img src={selectedWork.img} alt={selectedWork.title} className="collection-modal__image" />
-            </div>
-            <div className="collection-modal__details">
-              <h3 className="collection-modal__title">{selectedWork.title}</h3>
-              <p className="collection-modal__meta">{selectedWork.medium} • {selectedWork.year}</p>
-              <p className="collection-modal__desc">{selectedWork.description}</p>
-              
-              <a href="#/contact" className="collection-modal__inquiry-btn" onClick={closeModal}>
-                Inquire About This Work
-              </a>
-            </div>
-          </div>
-        </div>
-      )}
-    </>
+      </div>
+    </section>
   )
 }

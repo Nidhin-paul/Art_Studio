@@ -8,7 +8,7 @@ const STATUS_COLORS = {
   replied: { bg: '#f0fdf4', color: '#15803d', label: 'Replied' },
 }
 
-const EMPTY_FORM = { title: '', medium: '', year: new Date().getFullYear(), img: '', description: '', has360: false }
+const EMPTY_FORM = { title: '', medium: '', year: new Date().getFullYear(), img: '', description: '', has360: false, additionalImages: [] }
 
 export default function AdminPage() {
   const [tab, setTab] = useState('inquiries')
@@ -108,12 +108,38 @@ export default function AdminPage() {
       year: art.year,
       img: art.img,
       description: art.description || '',
-      has360: art.has360 || false
+      has360: art.has360 || false,
+      additionalImages: art.additionalImages || []
     });
     setFormSuccess(false);
     setFormError(null);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
+
+  const handleAdditionalImagesUpload = (e) => {
+    const files = Array.from(e.target.files);
+    if (files.length > 0) {
+      Promise.all(files.map(file => {
+        return new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result);
+          reader.readAsDataURL(file);
+        });
+      })).then(results => {
+        setForm(prev => ({
+          ...prev,
+          additionalImages: [...(prev.additionalImages || []), ...results]
+        }));
+      });
+    }
+  };
+
+  const removeAdditionalImage = (index) => {
+    setForm(prev => ({
+      ...prev,
+      additionalImages: prev.additionalImages.filter((_, i) => i !== index)
+    }));
+  };
 
   const handleCancelEdit = () => {
     setEditId(null);
@@ -315,6 +341,20 @@ export default function AdminPage() {
                   <input className="admin__input" value={form.img} onChange={e => setForm({ ...form, img: e.target.value })} placeholder="https://images.unsplash.com/..." required />
                   <input type="file" accept="image/*" onChange={handleImageUpload} style={{ marginTop: '0.5rem', fontSize: '0.8rem' }} />
                   {form.img && <img src={form.img} alt="preview" className="admin__img-preview" onError={e => e.target.style.display = 'none'} />}
+                </div>
+                <div className="admin__field">
+                  <label className="admin__label">Additional Images</label>
+                  <input type="file" accept="image/*" multiple onChange={handleAdditionalImagesUpload} style={{ marginTop: '0.5rem', fontSize: '0.8rem' }} />
+                  {form.additionalImages && form.additionalImages.length > 0 && (
+                    <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '1rem' }}>
+                      {form.additionalImages.map((imgSrc, idx) => (
+                        <div key={idx} style={{ position: 'relative' }}>
+                          <img src={imgSrc} alt={`additional-${idx}`} style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '4px', border: '1px solid #ddd' }} />
+                          <button type="button" onClick={() => removeAdditionalImage(idx)} style={{ position: 'absolute', top: '-5px', right: '-5px', background: 'red', color: 'white', border: 'none', borderRadius: '50%', width: '20px', height: '20px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>✕</button>
+                        </div>
+                      ))}
+                    </div>
+                  )}
                 </div>
                 <div className="admin__field">
                   <label className="admin__label">Description</label>
