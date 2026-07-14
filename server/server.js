@@ -89,12 +89,12 @@ app.get('/api/artworks', async (req, res) => {
 // POST add new artwork
 app.post('/api/artworks', async (req, res) => {
   try {
-    const { title, medium, year, img, description, has360, additionalImages } = req.body;
+    const { title, medium, year, img, description, has360, additionalImages, additionalImageDescriptions } = req.body;
     if (!title || !medium || !year || !img)
       return res.status(400).json({ error: 'Title, medium, year, and image URL are required.' });
 
     const count = await Artwork.countDocuments();
-    const newArtwork = new Artwork({ title, medium, year, img, description, has360, additionalImages, order: count });
+    const newArtwork = new Artwork({ title, medium, year, img, description, has360, additionalImages, additionalImageDescriptions, order: count });
     await newArtwork.save();
     res.status(201).json(newArtwork);
   } catch (error) {
@@ -115,10 +115,10 @@ app.delete('/api/artworks/:id', async (req, res) => {
 // PATCH update artwork
 app.patch('/api/artworks/:id', async (req, res) => {
   try {
-    const { title, medium, year, img, description, has360, additionalImages } = req.body;
+    const { title, medium, year, img, description, has360, additionalImages, additionalImageDescriptions } = req.body;
     const updated = await Artwork.findByIdAndUpdate(
       req.params.id,
-      { title, medium, year, img, description, has360, additionalImages },
+      { title, medium, year, img, description, has360, additionalImages, additionalImageDescriptions },
       { new: true }
     );
     if (!updated) return res.status(404).json({ error: 'Artwork not found.' });

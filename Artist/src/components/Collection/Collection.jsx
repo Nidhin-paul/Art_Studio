@@ -154,7 +154,7 @@ export default function Collection() {
         {/* Header Row */}
         <div className="collection__header">
           <div className="collection__header-left">
-            <span className="section-label">Gallery</span>
+            <span className="section-label">Gallery </span>
             <h2 className="collection__title" id="collection-title">The Collection</h2>
           </div>
           <p className="collection__description">

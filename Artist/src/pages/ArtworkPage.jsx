@@ -69,11 +69,15 @@ export default function ArtworkPage({ id }) {
           <div className="artwork-page__additional">
             <h2 className="artwork-page__additional-title">More Views & Details</h2>
             <div className="artwork-page__additional-grid">
-              {artwork.additionalImages.map((img, idx) => (
-                <div key={idx} className="artwork-page__additional-item">
-                  <img src={img} alt={`${artwork.title} detail ${idx + 1}`} loading="lazy" />
-                </div>
-              ))}
+              {artwork.additionalImages.map((img, idx) => {
+                const caption = artwork.additionalImageDescriptions && artwork.additionalImageDescriptions[idx];
+                return (
+                  <div key={idx} className="artwork-page__additional-item">
+                    <img src={img} alt={`${artwork.title} detail ${idx + 1}`} loading="lazy" />
+                    {caption && <p className="artwork-page__additional-caption">{caption}</p>}
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}

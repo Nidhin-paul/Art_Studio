@@ -1,0 +1,4 @@
+# Ignore all JSX files in the React project
+**/*.jsx
+node_modules/
+dist/

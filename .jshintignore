@@ -1,0 +1,6 @@
+# Ignore all JSX files which JSHint doesn't support
+**/*.jsx
+
+# Ignore Artist directory (uses Oxlint for linting)
+Artist/
+Art_Studio-main/

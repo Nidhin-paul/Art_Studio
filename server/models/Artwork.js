@@ -30,6 +30,10 @@ const artworkSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
+  additionalImageDescriptions: {
+    type: [String],
+    default: [],
+  },
   has360: {
     type: Boolean,
     default: false,

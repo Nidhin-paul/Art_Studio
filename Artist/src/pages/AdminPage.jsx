@@ -8,7 +8,7 @@ const STATUS_COLORS = {
   replied: { bg: '#f0fdf4', color: '#15803d', label: 'Replied' },
 }
 
-const EMPTY_FORM = { title: '', medium: '', year: new Date().getFullYear(), img: '', description: '', has360: false, additionalImages: [] }
+const EMPTY_FORM = { title: '', medium: '', year: new Date().getFullYear(), img: '', description: '', has360: false, additionalImages: [], additionalImageDescriptions: [] }
 
 export default function AdminPage() {
   const [tab, setTab] = useState('inquiries')
@@ -109,7 +109,8 @@ export default function AdminPage() {
       img: art.img,
       description: art.description || '',
       has360: art.has360 || false,
-      additionalImages: art.additionalImages || []
+      additionalImages: art.additionalImages || [],
+      additionalImageDescriptions: art.additionalImageDescriptions || (art.additionalImages || []).map(() => '')
     });
     setFormSuccess(false);
     setFormError(null);
@@ -128,7 +129,8 @@ export default function AdminPage() {
       })).then(results => {
         setForm(prev => ({
           ...prev,
-          additionalImages: [...(prev.additionalImages || []), ...results]
+          additionalImages: [...(prev.additionalImages || []), ...results],
+          additionalImageDescriptions: [...(prev.additionalImageDescriptions || []), ...results.map(() => '')]
         }));
       });
     }
@@ -137,7 +139,8 @@ export default function AdminPage() {
   const removeAdditionalImage = (index) => {
     setForm(prev => ({
       ...prev,
-      additionalImages: prev.additionalImages.filter((_, i) => i !== index)
+      additionalImages: prev.additionalImages.filter((_, i) => i !== index),
+      additionalImageDescriptions: (prev.additionalImageDescriptions || []).filter((_, i) => i !== index)
     }));
   };
 
@@ -346,11 +349,28 @@ export default function AdminPage() {
                   <label className="admin__label">Additional Images</label>
                   <input type="file" accept="image/*" multiple onChange={handleAdditionalImagesUpload} style={{ marginTop: '0.5rem', fontSize: '0.8rem' }} />
                   {form.additionalImages && form.additionalImages.length > 0 && (
-                    <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', marginTop: '1rem' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', marginTop: '1rem' }}>
                       {form.additionalImages.map((imgSrc, idx) => (
-                        <div key={idx} style={{ position: 'relative' }}>
-                          <img src={imgSrc} alt={`additional-${idx}`} style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '4px', border: '1px solid #ddd' }} />
-                          <button type="button" onClick={() => removeAdditionalImage(idx)} style={{ position: 'absolute', top: '-5px', right: '-5px', background: 'red', color: 'white', border: 'none', borderRadius: '50%', width: '20px', height: '20px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '12px' }}>✕</button>
+                        <div key={idx} style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', background: '#f9fafb', borderRadius: '8px', padding: '0.75rem', border: '1px solid #e5e7eb' }}>
+                          <div style={{ position: 'relative', flexShrink: 0 }}>
+                            <img src={imgSrc} alt={`additional-${idx}`} style={{ width: '80px', height: '80px', objectFit: 'cover', borderRadius: '6px', border: '1px solid #ddd', display: 'block' }} />
+                            <button type="button" onClick={() => removeAdditionalImage(idx)} style={{ position: 'absolute', top: '-6px', right: '-6px', background: '#dc2626', color: 'white', border: 'none', borderRadius: '50%', width: '20px', height: '20px', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '11px', lineHeight: 1 }}>✕</button>
+                          </div>
+                          <div style={{ flex: 1 }}>
+                            <label style={{ fontSize: '0.78rem', fontWeight: 600, color: '#6b7280', display: 'block', marginBottom: '0.35rem' }}>Image {idx + 1} Caption</label>
+                            <textarea
+                              value={(form.additionalImageDescriptions || [])[idx] || ''}
+                              onChange={e => {
+                                const descs = [...(form.additionalImageDescriptions || form.additionalImages.map(() => ''))];
+                                descs[idx] = e.target.value;
+                                setForm(prev => ({ ...prev, additionalImageDescriptions: descs }));
+                              }}
+                              placeholder={`Caption for image ${idx + 1}…`}
+                              maxLength={300}
+                              rows={2}
+                              style={{ width: '100%', resize: 'vertical', fontSize: '0.85rem', padding: '0.5rem 0.65rem', border: '1px solid #d1d5db', borderRadius: '6px', fontFamily: 'inherit', color: '#1a1a1a', background: '#fff', boxSizing: 'border-box' }}
+                            />
+                          </div>
                         </div>
                       ))}
                     </div>

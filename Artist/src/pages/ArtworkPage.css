@@ -181,3 +181,14 @@
 .artwork-page__additional-item img:hover {
   transform: scale(1.02);
 }
+
+.artwork-page__additional-caption {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.88rem;
+  color: var(--text-secondary, #666);
+  line-height: 1.55;
+  margin-top: 0.65rem;
+  padding: 0 0.15rem;
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
