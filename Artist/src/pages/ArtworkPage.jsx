@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import './ArtworkPage.css';
 
+const API_URL = import.meta.env.VITE_API_URL || '';
+
 const FALLBACK_ARTWORKS = [
   { _id: '1', title: 'Convergences', medium: 'Mixed Media on Canvas', year: 2022, img: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=600&q=80', has360: false, description: 'An exploration of intersecting planes and the tension between chaos and order.', additionalImages: ['https://images.unsplash.com/photo-1549490349-8643362247b5?w=600&q=80', 'https://images.unsplash.com/photo-1574182245530-967d9b3831af?w=600&q=80'] },
   { _id: '2', title: 'Ephemeral Bloom', medium: 'Oil on Canvas', year: 2021, img: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=600&q=80', has360: false, description: 'Capturing the fleeting beauty of nature and the passage of time through vibrant hues.' },
@@ -21,7 +23,7 @@ export default function ArtworkPage({ id }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch('/api/artworks')
+    fetch(`${API_URL}/api/artworks`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {

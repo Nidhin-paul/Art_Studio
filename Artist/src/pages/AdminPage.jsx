@@ -9,6 +9,7 @@ const STATUS_COLORS = {
 }
 
 const EMPTY_FORM = { title: '', medium: '', year: new Date().getFullYear(), img: '', description: '', has360: false, additionalImages: [], additionalImageDescriptions: [] }
+const API_URL = import.meta.env.VITE_API_URL || '';
 
 export default function AdminPage() {
   const [tab, setTab] = useState('inquiries')
@@ -35,7 +36,7 @@ export default function AdminPage() {
   const fetchInquiries = async () => {
     setLoadingInquiries(true)
     try {
-      const res = await fetch('/api/inquiries')
+      const res = await fetch(`${API_URL}/api/inquiries`)
       if (!res.ok) throw new Error('Failed to load')
       setInquiries(await res.json())
     } catch (err) { setInquiryError(err.message) }
@@ -45,7 +46,7 @@ export default function AdminPage() {
   const fetchArtworks = async () => {
     setLoadingArtworks(true)
     try {
-      const res = await fetch('/api/artworks')
+      const res = await fetch(`${API_URL}/api/artworks`)
       if (!res.ok) throw new Error('Failed to load')
       setArtworks(await res.json())
     } catch (err) { setArtworkError(err.message) }
@@ -57,7 +58,7 @@ export default function AdminPage() {
 
   const updateStatus = async (id, status) => {
     try {
-      const res = await fetch(`/api/inquiries/${id}`, {
+      const res = await fetch(`${API_URL}/api/inquiries/${id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ status }),
@@ -75,7 +76,7 @@ export default function AdminPage() {
     setSubmitting(true)
     try {
       const isEdit = !!editId;
-      const url = isEdit ? `/api/artworks/${editId}` : '/api/artworks';
+      const url = isEdit ? `${API_URL}/api/artworks/${editId}` : `${API_URL}/api/artworks`;
       const method = isEdit ? 'PATCH' : 'POST';
 
       const res = await fetch(url, {
@@ -165,7 +166,7 @@ export default function AdminPage() {
   const handleDeleteArtwork = async (id) => {
     if (!window.confirm('Remove this artwork from the gallery?')) return
     try {
-      await fetch(`/api/artworks/${id}`, { method: 'DELETE' })
+      await fetch(`${API_URL}/api/artworks/${id}`, { method: 'DELETE' })
       setArtworks(prev => prev.filter(a => a._id !== id))
     } catch { alert('Failed to delete.') }
   }

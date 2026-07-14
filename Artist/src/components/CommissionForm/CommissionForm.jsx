@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './CommissionForm.css'
 
+const API_URL = import.meta.env.VITE_API_URL || '';
+
 export default function CommissionForm() {
   const [form, setForm] = useState({
     fullName: '',
@@ -22,7 +24,7 @@ export default function CommissionForm() {
     setError(null)
 
     try {
-      const response = await fetch('/api/inquiries', {
+      const response = await fetch(`${API_URL}/api/inquiries`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import './Collection.css'
 
+const API_URL = import.meta.env.VITE_API_URL || '';
+
 const FALLBACK_ARTWORKS = [
   { _id: '1', title: 'Convergences', medium: 'Mixed Media on Canvas', year: 2022, img: 'https://images.unsplash.com/photo-1578301978693-85fa9c0320b9?w=600&q=80', has360: false, description: 'An exploration of intersecting planes and the tension between chaos and order.' },
   { _id: '2', title: 'Ephemeral Bloom', medium: 'Oil on Canvas', year: 2021, img: 'https://images.unsplash.com/photo-1541961017774-22349e4a1262?w=600&q=80', has360: false, description: 'Capturing the fleeting beauty of nature and the passage of time through vibrant hues.' },
@@ -132,7 +134,7 @@ export default function Collection() {
 
   // Fetch artworks from API — use fallback if API is unavailable or empty
   useEffect(() => {
-    fetch('/api/artworks')
+    fetch(`${API_URL}/api/artworks`)
       .then(res => res.json())
       .then(data => {
         if (Array.isArray(data) && data.length > 0) {

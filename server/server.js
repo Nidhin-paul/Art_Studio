@@ -1,12 +1,10 @@
+import 'dotenv/config';
 import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import dotenv from 'dotenv';
 import Inquiry from './models/Inquiry.js';
 import Artwork from './models/Artwork.js';
 import { sendInquiryNotification, sendConfirmationToInquirer } from './utils/emailService.js';
-
-dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 5000;
