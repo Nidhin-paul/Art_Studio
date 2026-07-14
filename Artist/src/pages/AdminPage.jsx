@@ -314,7 +314,7 @@ export default function AdminPage() {
                       ))}
                     </div>
                   </div>
-                  <a href={`mailto:${selected.email}?subject=Re: ${encodeURIComponent(selected.subject)}`} className="admin__reply-btn">Reply via Email →</a>
+                  <a href={`https://mail.google.com/mail/?view=cm&to=${encodeURIComponent(selected.email)}&su=${encodeURIComponent('Re: ' + selected.subject)}`} target="_blank" rel="noopener noreferrer" className="admin__reply-btn">Reply via Gmail →</a>
                 </div>
               )}
             </div>
