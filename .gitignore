@@ -27,3 +27,6 @@ Thumbs.db
 
 # Vite cache
 Artist/.vite/
+
+# Output
+server/output.txt
